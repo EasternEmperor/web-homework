@@ -6,6 +6,7 @@
 </head>
 
 <body>
+    <!-- 用户信息表格 -->
 <table border="3" align="center" style="border-collapse: collapse;" id="mytable">
     <caption style="font-size: 20px;"><b>用户信息</b></caption>
     <thead>
@@ -44,12 +45,13 @@
     </tbody>
 </table>
 
+<!-- 添加一条用户按钮 -->
 <div style="text-align: center; margin-right:40px;">
     <input type="button" value="添加"  class="button" id="add"  onclick="addList()" />
 </div>
 
 <form>
-    <!-- 隐藏的表格，只有点击编辑按钮才显示 -->
+    <!-- 隐藏的表格（用于更新用户信息），只有点击编辑按钮才显示 -->
     <table border="3" align="center" style="border-collapse: collapse; display: none;" id = "modifyTable">
         <caption style="font-size: 20px;"><b>修改数据</b></caption>
         <tr>
@@ -74,6 +76,7 @@
         </tr>
         <tr>
             <td colspan="2" style="text-align: center;">
+                <!-- 重置和更新按钮 -->
                 <input type="reset" value="重置" class="button" id="reset" />
                 <input type="button" value="更新"  class="button" id="update"  onclick="updateList()" />
             </td>
@@ -150,6 +153,7 @@
             oMytable.rows[rowIndex].cells[4].innerHTML = oAdd.value;
             oMytable.rows[rowIndex].cells[5].innerHTML = oQQ.value;
             alert("更新成功！");
+
             document.getElementById("modifyTable").style.display="none";//隐藏表格
         }
         else {

@@ -48,66 +48,100 @@
         var oMail = document.getElementById('mailbox').value;
         var oAdd = document.getElementById('address').value;
         var oQQ = document.getElementById('QQnumber').value;
-        var oTr = document.createElement('tr');
-        var oTd1 = document.createElement('td');
-        var oInput = document.createElement('input');
-        oTd1.appendChild(oInput);
-        oInput.setAttribute('type','checkbox');
-        oInput.setAttribute('name','item');
-        var oTd2 = document.createElement('td');
-        oTd2.innerHTML = oUser;
-        var oTd3 = document.createElement('td');
-        oTd3.innerHTML = oTel;
-        var oTd4 = document.createElement('td');
-        oTd4.innerHTML = oMail;
-        var oTd5 = document.createElement('td');
-        oTd5.innerHTML = oAdd;
-        var oTd6 = document.createElement('td');
-        oTd6.innerHTML = oQQ;
-        var oTd7 = document.createElement('td');
-        var oInput2 = document.createElement('input');
-        var oInput3 = document.createElement('input');
-        oInput2.setAttribute('type','button');
-        oInput2.setAttribute('value','删除');
-        oInput2.setAttribute('onclick','del(this)');
-        oInput2.className = 'delet_button';
-        oInput3.setAttribute('type','button');
-        oInput3.setAttribute('value','编辑');
-        oInput3.setAttribute('onclick','modify(this)');
-        oInput3.className = 'button';
-        oTd7.appendChild(oInput2);
-        oTd7.appendChild(oInput3);
-        oTr.appendChild(oTd1);
-        oTr.appendChild(oTd2);
-        oTr.appendChild(oTd3);
-        oTr.appendChild(oTd4);
-        oTr.appendChild(oTd5);
-        oTr.appendChild(oTd6);
-        oTr.appendChild(oTd7);
-        var olistTable = document.getElementById('listTable');
+        // 以下为在原用户信息表格增加行的代码
+        // var oTr = document.createElement('tr');
+        // var oTd1 = document.createElement('td');
+        // var oInput = document.createElement('input');
+        // oTd1.appendChild(oInput);
+        // oInput.setAttribute('type','checkbox');
+        // oInput.setAttribute('name','item');
+        // var oTd2 = document.createElement('td');
+        // oTd2.innerHTML = oUser;
+        // var oTd3 = document.createElement('td');
+        // oTd3.innerHTML = oTel;
+        // var oTd4 = document.createElement('td');
+        // oTd4.innerHTML = oMail;
+        // var oTd5 = document.createElement('td');
+        // oTd5.innerHTML = oAdd;
+        // var oTd6 = document.createElement('td');
+        // oTd6.innerHTML = oQQ;
+        // var oTd7 = document.createElement('td');
+        // var oInput2 = document.createElement('input');
+        // var oInput3 = document.createElement('input');
+        // oInput2.setAttribute('type','button');
+        // oInput2.setAttribute('value','删除');
+        // oInput2.setAttribute('onclick','del(this)');
+        // oInput2.className = 'delet_button';
+        // oInput3.setAttribute('type','button');
+        // oInput3.setAttribute('value','编辑');
+        // oInput3.setAttribute('onclick','modify(this)');
+        // oInput3.className = 'button';
+        // oTd7.appendChild(oInput2);
+        // oTd7.appendChild(oInput3);
+        // oTr.appendChild(oTd1);
+        // oTr.appendChild(oTd2);
+        // oTr.appendChild(oTd3);
+        // oTr.appendChild(oTd4);
+        // oTr.appendChild(oTd5);
+        // oTr.appendChild(oTd6);
+        // oTr.appendChild(oTd7);
+        // var olistTable = document.getElementById('listTable');
         
-        //判断是否由非法输入
-        if (checkEmail(oMail) && oUser != "" && oTel != "" && oAdd != "" && oQQ != "") {
-            olistTable.appendChild(oTr);
+        //判断是否由非法输入，以下alert为顺序检测，即只会出现一个alert框
+        // 姓名错误
+        if (! checkName(oUser)) {
+            if (oUser == "")
+                alert("姓名不能为空！");
+            else
+                alert("请输入正确姓名！")
         }
-        else {
-            //邮箱错误
-            if (! checkEmail(oMail)) {
-                alert("邮箱错误！");
-            }
-            //有空输入
-            else {
-                alert("输入不能为空！")
-            }
+        // 电话错误
+        else if (! checkTel(oTel)) {
+            if (oTel == "") 
+                alert("电话不能为空！")
+            else
+                alert("请输入正确电话号码！")
         }
+        // 邮箱错误
+        else if (! checkEmail(oMail)) {
+            if (oMail == "") 
+                alert("邮箱不能为空！");
+            else 
+                alert("邮箱格式错误！");
+        }
+        // QQ错误
+        else if (! checkQQ(oQQ)) {
+            if (oQQ == "")
+                alert("QQ不能为空！");
+            else
+                alert("请输入正确QQ号！");
+        }
+        // 全部正确则添加成功
+        else
+            alert("添加成功！");
     }
 
     //获取文本框,注册失去焦点的事件
+    function checkName(str) {
+        // 判断文本框输入的是否为中文姓名
+        var nameReg = /^[\u4E00-\u9FA5]{2,4}$/;
+        return nameReg.test(str);
+    }
+    function checkTel(str) {
+        // 判断文本框输入的是否为电话号码
+        var telReg=/(^[0-9]{3,4}\-[0-9]{3,8}$)|(^[0-9]{3,8}$)|(^\([0-9]{3,4}\)[0-9]{3,8}$)|(^0{0,1}13[0-9]{9}$)/;
+        return telReg.test(str);
+    }
     function checkEmail(str) {
-        //判断这个文本框中输入的是不是邮箱
-        var reg=/^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
-        return reg.test(str);
-    };
+        // 判断这个文本框中输入的是不是邮箱
+        var mailReg=/^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+        return mailReg.test(str);
+    }
+    function checkQQ(str) {
+        // 判断文本框中输入的是否为正确的QQ号
+        var QQReg = /^[1-9][0-9]{4,9}$/gim;
+        return QQReg.test(str);
+    }
 </script>
 
 </body>

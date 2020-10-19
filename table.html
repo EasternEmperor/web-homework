@@ -31,7 +31,7 @@
     <tbody id="listTable">
         <tr>
             <td><input type="checkbox" name="item" /></td>
-            <td>user1</td>
+            <td>杰尼龟</td>
             <td>88888888</td>
             <td>a@qq.com</td>
             <td>瓦罗兰大陆艾欧尼亚</td>
@@ -145,8 +145,36 @@
         var oMytable = document.getElementById('mytable');
         console.log(oMytable.rows[rowIndex].cells)
 
-        //判断是否由非法输入
-        if (checkEmail(oMail.value) && oUser != "" && oTel != "" && oAdd != "" && oQQ != "") {
+        //判断是否由非法输入，以下alert为顺序检测，即只会出现一个alert框
+        // 姓名错误
+        if (! checkName(oUser.value)) {
+            if (oUser.value == "")
+                alert("姓名不能为空！");
+            else
+                alert("请输入正确姓名！")
+        }
+        // 电话错误
+        else if (! checkTel(oTel.value)) {
+            if (oTel.value == "") 
+                alert("电话不能为空！")
+            else
+                alert("请输入正确电话号码！")
+        }
+        // 邮箱错误
+        else if (! checkEmail(oMail.value)) {
+            if (oMail.value == "") 
+                alert("邮箱不能为空！");
+            else 
+                alert("邮箱格式错误！");
+        }
+        // QQ错误
+        else if (! checkQQ(oQQ.value)) {
+            if (oQQ.value == "")
+                alert("QQ不能为空！");
+            else
+                alert("请输入正确QQ号！");
+        }
+        else {
             oMytable.rows[rowIndex].cells[1].innerHTML = oUser.value;
             oMytable.rows[rowIndex].cells[2].innerHTML = oTel.value;
             oMytable.rows[rowIndex].cells[3].innerHTML = oMail.value;
@@ -156,24 +184,30 @@
 
             document.getElementById("modifyTable").style.display="none";//隐藏表格
         }
-        else {
-            //邮箱错误
-            if (! checkEmail(oMail)) {
-                alert("邮箱错误！");
-            }
-            //有空输入
-            else {
-                alert("输入不能为空！")
-            }
-        }
     }
 
     //获取文本框,注册失去焦点的事件
+    function checkName(str) {
+        // 判断文本框输入的是否为中文姓名
+        var nameReg = /^[\u4E00-\u9FA5]{2,4}$/;
+        return nameReg.test(str);
+    }
+    function checkTel(str) {
+        // 判断文本框输入的是否为电话号码
+        var telReg=/(^[0-9]{3,4}\-[0-9]{3,8}$)|(^[0-9]{3,8}$)|(^\([0-9]{3,4}\)[0-9]{3,8}$)|(^0{0,1}13[0-9]{9}$)/;
+        return telReg.test(str);
+    }
     function checkEmail(str) {
-        //判断这个文本框中输入的是不是邮箱
-        var reg=/^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
-        return reg.test(str);
-    };
+        // 判断这个文本框中输入的是不是邮箱
+        var mailReg=/^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+        return mailReg.test(str);
+    }
+    function checkQQ(str) {
+        // 判断文本框中输入的是否为正确的QQ号
+        var QQReg = /^[1-9][0-9]{4,9}$/gim;
+        return QQReg.test(str);
+    }
+
 </script>
 </body>
 </html>

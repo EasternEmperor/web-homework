@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="table.css">    <!--链接css文件-->
+</head>
+
+<body>
+<table border="3" align="center" style="border-collapse: collapse;" id="mytable">
+    <caption style="font-size: 20px;"><b>用户信息</b></caption>
+    <thead>
+        <!--表格列属性-->
+        <tr>
+            <th>选中</th>           <!--选中该行，用于全部删除-->
+            <th>姓名</th>
+            <th>电话</th>
+            <th>邮箱</th>
+            <th>住址</th>
+            <th>QQ</th>
+            <th>操作</th>
+        </tr>
+        <!--表格第一行实现全部删除-->
+        <tr>
+            <td><input type="checkbox" onclick="checkAll(this)"/></td>
+            <td colspan="6" style="text-align:center">
+                <a class="delet_button" role="button" onclick="delAll(this)">全部删除</a></td>
+        </tr>
+    </thead>
+    <!--示例-->
+    <tbody id="listTable">
+        <tr>
+            <td><input type="checkbox" name="item" /></td>
+            <td>user1</td>
+            <td>88888888</td>
+            <td>a@qq.com</td>
+            <td>瓦罗兰大陆艾欧尼亚</td>
+            <td>12345678</td>
+            <!--删除、编辑按钮-->
+            <td>
+                <input type="button" name="" value="删除" class="delet_button" onclick="del(this)" />
+                <input type="button" name="" value="编辑" class="button" onclick="modify(this)" />
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<div style="text-align: center; margin-right:40px;">
+    <input type="button" value="添加"  class="button" id="add"  onclick="addList()" />
+</div>
+
+<form>
+    <!-- 隐藏的表格，只有点击编辑按钮才显示 -->
+    <table border="3" align="center" style="border-collapse: collapse; display: none;" id = "modifyTable">
+        <caption style="font-size: 20px;"><b>修改数据</b></caption>
+        <tr>
+            <th>姓名</th>
+            <td><input type="text" name="" class="form-control" id="username" /></td>
+        </tr>
+        <tr>
+            <th>电话</th>
+            <td><input type="text" name="" class="form-control" id="telephone" /></td>
+        </tr>
+        <tr>
+            <th>邮箱</th>
+            <td><input type="text" name="" class="form-control" id="mailbox" /></td>
+        </tr>
+        <tr>
+            <th>住址</th>
+            <td><input type="text" name="" class="form-control" id="address" /></td>
+        </tr>
+        <tr>
+            <th>QQ</th>
+            <td><input type="text" name="" class="form-control" id="QQnumber" /></td>
+        </tr>
+        <tr>
+            <td colspan="2" style="text-align: center;">
+                <input type="reset" value="重置" class="button" id="reset" />
+                <input type="button" value="更新"  class="button" id="update"  onclick="updateList()" />
+            </td>
+        </tr>
+    </table>
+</form>
+
+<script>
+    // 删除
+    function del(obj){
+        var oParentnode = obj.parentNode.parentNode;
+        var olistTable = document.getElementById('listTable');
+        olistTable.removeChild(oParentnode);
+    }
+
+    //全选
+    function checkAll(c){
+        var status = c.checked;
+        var oItems = document.getElementsByName('item');
+        for(var i=0;i<oItems.length;i++){
+            oItems[i].checked=status;
+        }
+    }
+
+    //删除全部的功能
+    function delAll(){
+        var olistTable = document.getElementById('listTable');
+        var items = document.getElementsByName("item");
+        for(var j=0;j<items.length;j++){    
+            if(items[j].checked)//如果item被选中
+            {
+                var oParentnode = items[j].parentNode.parentNode;
+                olistTable.removeChild(oParentnode);
+                j--;
+            }
+        }
+    }
+
+    //修改功能
+    function modify(obj){
+        document.getElementById("modifyTable").style.display="table";//显示表格
+        
+        var oUser = document.getElementById('username');
+        var oTel = document.getElementById('telephone');
+        var oMail = document.getElementById('mailbox');
+        var oAdd = document.getElementById('address');
+        var oQQ = document.getElementById('QQnumber');
+        var oTr = obj.parentNode.parentNode;
+        var aTd = oTr.getElementsByTagName('td');
+        rowIndex = obj.parentNode.parentNode.rowIndex;  
+        oUser.value = aTd[1].innerHTML;
+        oTel.value = aTd[2].innerHTML;
+        oMail.value = aTd[3].innerHTML;
+        oAdd.value = aTd[4].innerHTML;
+        oQQ.value = aTd[5].innerHTML;
+        console.log(aTd[4].innerHTML);
+    }
+
+    //更新功能
+    function updateList(){
+        var oUser = document.getElementById('username');
+        var oTel = document.getElementById('telephone');
+        var oMail = document.getElementById('mailbox');
+        var oAdd = document.getElementById('address');
+        var oQQ = document.getElementById('QQnumber');
+        var oMytable = document.getElementById('mytable');
+        console.log(oMytable.rows[rowIndex].cells)
+
+        //判断是否由非法输入
+        if (checkEmail(oMail.value) && oUser != "" && oTel != "" && oAdd != "" && oQQ != "") {
+            oMytable.rows[rowIndex].cells[1].innerHTML = oUser.value;
+            oMytable.rows[rowIndex].cells[2].innerHTML = oTel.value;
+            oMytable.rows[rowIndex].cells[3].innerHTML = oMail.value;
+            oMytable.rows[rowIndex].cells[4].innerHTML = oAdd.value;
+            oMytable.rows[rowIndex].cells[5].innerHTML = oQQ.value;
+            alert("更新成功！");
+            document.getElementById("modifyTable").style.display="none";//隐藏表格
+        }
+        else {
+            //邮箱错误
+            if (! checkEmail(oMail)) {
+                alert("邮箱错误！");
+            }
+            //有空输入
+            else {
+                alert("输入不能为空！")
+            }
+        }
+    }
+
+    //获取文本框,注册失去焦点的事件
+    function checkEmail(str) {
+        //判断这个文本框中输入的是不是邮箱
+        var reg=/^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+        return reg.test(str);
+    };
+</script>
+</body>
+</html>

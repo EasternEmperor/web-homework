@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="add.css">    <!--链接css文件-->
+</head>
+
+<body>
+<form>
+    <table border="3" align="center" style="border-collapse: collapse;">
+        <caption style="font-size: 20px;"><b>修改数据</b></caption>
+        <tr>
+            <th>姓名</th>
+            <td><input type="text" name="" class="form-control" id="username" /></td>
+        </tr>
+        <tr>
+            <th>电话</th>
+            <td><input type="text" name="" class="form-control" id="telephone" /></td>
+        </tr>
+        <tr>
+            <th>邮箱</th>
+            <td><input type="text" name="" class="form-control" id="mailbox" /></td>
+        </tr>
+        <tr>
+            <th>住址</th>
+            <td><input type="text" name="" class="form-control" id="address" /></td>
+        </tr>
+        <tr>
+            <th>QQ</th>
+            <td><input type="text" name="" class="form-control" id="QQnumber" /></td>
+        </tr>
+        <tr>
+            <td colspan="2" style="text-align: center;">
+                <input type="reset" value="重置" class="button" id="reset" />
+                <input type="button" value="添加"  class="button" id="add"  onclick="addList()" />
+            </td>
+        </tr>
+    </table>
+</form>
+
+<script>
+    /*增加*/
+    function addList(){
+        var oUser = document.getElementById('username').value;
+        var oTel = document.getElementById('telephone').value;
+        var oMail = document.getElementById('mailbox').value;
+        var oAdd = document.getElementById('address').value;
+        var oQQ = document.getElementById('QQnumber').value;
+        var oTr = document.createElement('tr');
+        var oTd1 = document.createElement('td');
+        var oInput = document.createElement('input');
+        oTd1.appendChild(oInput);
+        oInput.setAttribute('type','checkbox');
+        oInput.setAttribute('name','item');
+        var oTd2 = document.createElement('td');
+        oTd2.innerHTML = oUser;
+        var oTd3 = document.createElement('td');
+        oTd3.innerHTML = oTel;
+        var oTd4 = document.createElement('td');
+        oTd4.innerHTML = oMail;
+        var oTd5 = document.createElement('td');
+        oTd5.innerHTML = oAdd;
+        var oTd6 = document.createElement('td');
+        oTd6.innerHTML = oQQ;
+        var oTd7 = document.createElement('td');
+        var oInput2 = document.createElement('input');
+        var oInput3 = document.createElement('input');
+        oInput2.setAttribute('type','button');
+        oInput2.setAttribute('value','删除');
+        oInput2.setAttribute('onclick','del(this)');
+        oInput2.className = 'delet_button';
+        oInput3.setAttribute('type','button');
+        oInput3.setAttribute('value','编辑');
+        oInput3.setAttribute('onclick','modify(this)');
+        oInput3.className = 'button';
+        oTd7.appendChild(oInput2);
+        oTd7.appendChild(oInput3);
+        oTr.appendChild(oTd1);
+        oTr.appendChild(oTd2);
+        oTr.appendChild(oTd3);
+        oTr.appendChild(oTd4);
+        oTr.appendChild(oTd5);
+        oTr.appendChild(oTd6);
+        oTr.appendChild(oTd7);
+        var olistTable = document.getElementById('listTable');
+        
+        //判断是否由非法输入
+        if (checkEmail(oMail) && oUser != "" && oTel != "" && oAdd != "" && oQQ != "") {
+            olistTable.appendChild(oTr);
+        }
+        else {
+            //邮箱错误
+            if (! checkEmail(oMail)) {
+                alert("邮箱错误！");
+            }
+            //有空输入
+            else {
+                alert("输入不能为空！")
+            }
+        }
+    }
+
+    //获取文本框,注册失去焦点的事件
+    function checkEmail(str) {
+        //判断这个文本框中输入的是不是邮箱
+        var reg=/^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+        return reg.test(str);
+    };
+</script>
+
+</body>
+</html>

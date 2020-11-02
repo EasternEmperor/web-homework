@@ -10,7 +10,7 @@
     <div class="box">
         <h2>Login</h2>
         <!--创建供用户输入的HTML表单-->
-        <form class="form-box" action="/loginServlet">
+        <form class="form-box" action="/servlet01/loginServlet">
             <!--用户名输入框-->
             <div class="inputBox">
                 <input id="username" type="text" name="username" required="">
@@ -23,7 +23,7 @@
             </div>
             <!--登录按钮-->
             <div style="text-align: center">
-                <input type="submit" name="" value="登录" onclick='location.href=("/loginServlet")'>登录
+                <input type="submit" name="" value="登录" onclick=myFunction()>登录
             </div>
         </form>
         <p style="background-color:rgb(48, 3, 3); color: red;">
@@ -35,7 +35,7 @@
         function myFunction() {
             if(document.getElementById("username").value=="admin") {
                 if(document.getElementById("password").value=="123456") {
-                   window.location.href = "file:///E:/STUDY/VSCode/VSCode/HtmlCodes/table.html?"
+                   window.location.href = "/servlet01/loginServlet"
                 }
                 else {
                     alert("密码错误！");

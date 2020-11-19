@@ -1,0 +1,91 @@
+body {
+    /*加载背景图*/
+    background: url("/img/unravel.jpg");
+    /* 背景图垂直、水平均居中 */
+    background-position: center center;
+    /*背景图不平铺*/
+    background-repeat: no-repeat;
+    /* 让背景图基于容器大小伸缩 */
+    background-size: cover;
+    /* 当内容高度大于图片高度时，背景图像的位置相对于viewport固定 */
+    background-attachment: fixed;
+    /* 设置背景颜色，背景图加载过程中会显示背景色 */
+    background-color: #6b0a0a;
+}
+
+/*登陆界面样式*/
+/*登录框架*/
+.box {
+    /*生成绝对定位的元素，元素的位置通过 "left", "top", "right" 以及 "bottom" 属性进行规定。(此处相对于body)*/
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /*实现块元素百分比下居中*/
+    width: 400px;
+    padding: 40px; /*设置四个内边距*/
+    background: rgba(0, 0, 0, .8); /*函数的前三个变量为颜色（黑），后一个为透明度（1为不透明）*/
+    box-sizing: border-box; /*使实际所占宽高度 = 设置的高度（height）/ 设置的宽度（width）+ 外边距（margin）*/
+    box-shadow: 0 15px 25px rgba(0, 0, 0, .5); /*产生盒子阴影：x轴偏移，y轴偏移，模糊度，透明色*/
+    border-radius: 10px; /*使矩形四边圆滑*/
+
+}
+
+/*Login标题展示*/
+.box h2 {
+    margin: 0 0 30px; /*上、左右、下*/
+    padding: 0;
+    color: #fff; /*设置字体颜色*/
+    text-align: center; /*文字居中*/
+}
+
+/*定义各输入框类*/
+.box .inputBox {
+    position: relative; /*相对定位*/
+}
+
+/*输入框*/
+.box .inputBox input {
+    width: 100%;
+    padding: 10px 0; /*上下、左右*/
+    font-size: 16px; /*字体大小（可用于调节输入框高）*/
+    color: #fff; /*输入框颜色*/
+    letter-spacing: 1px; /*设置对象中的文字之间的间隔*/
+    margin-bottom: 30px; /*设置下外距*/
+    border-bottom: 1px solid #fff; /*底边框：大小1PX 实线 颜色#ffffff */
+    outline: none; /*设置无外边框*/
+    background: transparent; /*背景设置为透明*/
+}
+
+/*输入框在鼠标点击后的动画（文字上浮）*/
+.box .inputBox label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 10px 0;
+    font-size: 16px;
+    color: #fff;
+    pointer-events: none; /*阻止区块被点击，使得点击穿透*/
+    transition: .5s; /*动画运行时间*/
+}
+
+/*产生对应操作时（鼠标点击），label发生的样式变化*/
+.box .inputBox input:focus ~ label,
+.box .inputBox input:valid ~ label {
+    top: -18px;
+    left: 0;
+    color: #03a9f4;
+    font-size: 12px;
+}
+
+.box input[type='submit'] {
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #ffffff;
+    background: #03a9f4;
+    padding: 10px 20px;
+    border-radius: 5px; /*调节矩形弧度*/
+    cursor: pointer; /*鼠标指针变成手的形状*/
+    top: 50%;
+    left: 50%;
+}

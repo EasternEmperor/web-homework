@@ -1,0 +1,27 @@
+body{
+    /*加载背景图*/
+    background: url("/img/add.jpg");
+    /* 背景图垂直、水平均居中 */
+    background-position: center center;
+    /*背景图不平铺*/
+    background-repeat: no-repeat;
+    /* 让背景图基于容器大小伸缩 */
+    background-size:cover;
+    /* 当内容高度大于图片高度时，背景图像的位置相对于viewport固定 */
+    background-attachment:fixed;
+    /* 设置背景颜色，背景图加载过程中会显示背景色 */
+    background-color:#d89f9f;
+}
+/* 除删除外的按钮 */
+.button {
+    background-color: #668b92; 
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    border-radius: 15px; /*调节矩形弧度*/
+    cursor: pointer;    /*鼠标指针变成手的形状*/
+    font-size: 16px;
+}

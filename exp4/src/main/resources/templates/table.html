@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="./css/table.css">    <!--链接css文件-->
+</head>
+
+<body>
+    <!-- 用户信息表格 -->
+<table border="3" align="center" style="border-collapse: collapse;" id="mytable">
+    <caption style="font-size: 20px;"><b>通讯录</b></caption>
+    <thead>
+        <!--表格列属性-->
+        <tr>
+            <th>ID</th>           <!--选中该行，用于全部删除-->
+            <th>姓名</th>
+            <th>电话</th>
+            <th>邮箱</th>
+            <th>住址</th>
+            <th>QQ</th>
+            <th>操作</th>
+        </tr>
+
+        <tr th:each="userInfo : ${user}">
+            <td th:text="${userInfo.currentID}"></td>
+            <td th:text="${userInfo.name}"></td>
+            <td th:text="${userInfo.telephone}"></td>
+            <td th:text="${userInfo.email}"></td>
+            <td th:text="${userInfo.address}"></td>
+            <td th:text="${userInfo.qq}"></td>
+
+            <!--编辑按钮-->
+            <form th:action="@{'/table/edit/' + ${userInfo.currentID}}" method="get">
+                <td><input type="submit" name="" value="编辑" class="button" />
+            </form>
+
+            <!--删除按钮-->
+            <form th:action="@{'/table/delete/' + ${userInfo.currentID}}" method="post">
+                <input type="submit" name="" value="删除" class="delet_button" /></td>
+            </form>
+        </tr>
+    </thead>
+</table>
+
+    <!--添加按钮-->
+    <form th:action="@{/add}" method="get">
+        <div style="text-align: center; margin-right:40px;">
+            <input type="submit" value="添加"  class="button" id="add"></a>
+        </div>
+    </form>
+
+    <!--登出按钮-->
+    <form th:action="@{/logout}" method="get">
+        <div style="text-align: right; margin-right:40px;">
+            <input type="submit" value="退出"  class="delet_button" id="logout"></a>
+        </div>
+    </form>
+
+</body>
+</html>

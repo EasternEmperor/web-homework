@@ -25,6 +25,12 @@ body{
     cursor: pointer;    /*鼠标指针变成手的形状*/
     font-size: 16px;
 }
-#tip {
+#tip1 {
+    font-size: 12px;
+}
+#tip2 {
+    font-size: 12px;
+}
+#tip3 {
     font-size: 12px;
 }

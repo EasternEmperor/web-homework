@@ -162,4 +162,18 @@ public class controller {
     public boolean findByPhone(@PathVariable String telephone){
         return userRepository.existsByTelephone(telephone);
     }
+
+    /* ajax查询是否已记录邮箱 */
+    @ResponseBody
+    @GetMapping("/mailbox/{mailbox}")
+    public boolean findByMail(@PathVariable String mailbox){
+        return userRepository.existsByEmail(mailbox);
+    }
+
+    /* ajax查询是否已记录姓名 */
+    @ResponseBody
+    @GetMapping("/username/{username}")
+    public boolean findByName(@PathVariable String username){
+        return userRepository.existsByName(username);
+    }
 }

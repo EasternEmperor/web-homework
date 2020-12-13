@@ -16,15 +16,17 @@
         <tr>
             <th>姓名</th>
             <td><input type="text" name="" class="form-control" id="username" th:field="*{name}"/></td>
+            <th><p id = tip3></p></th>
         </tr>
         <tr>
             <th>电话</th>
             <td><input type="text" name="" class="form-control" id="telephone" th:field="*{telephone}"/></td>
-            <th><p id = "tip"></p></th>
+            <th><p id = "tip1"></p></th>
         </tr>
         <tr>
             <th>邮箱</th>
             <td><input type="text" name="" class="form-control" id="mailbox" th:field="*{email}"/></td>
+            <th><p id = "tip2"></p></th>
         </tr>
         <tr>
             <th>住址</th>
@@ -75,9 +77,9 @@
         alert("添加成功！");
         return true
     }
-    $("input[name='telephone']").blur(function checkTelephone(){
+    $("#telephone").blur(function checkTelephone(){
         //console.log("失去了焦点");
-        var telephone = $("input[name='telephone']").val();
+        var telephone = $("#telephone").val();
         if(telephone!=null && telephone!==""){
             $.ajax({
                 url:"/telephone/"+telephone,
@@ -86,14 +88,60 @@
                 success:function (result,status,xhr){
                     //console.log(result);
                     if(result===true){
-                        $("#tip").css("color","red").text("该电话已存在！");
+                        $("#tip1").css("color","red").text("该电话已存在！");
                     }
                     else{
-                        $("#tip").css("color","green").text("该电话可记录！");
+                        $("#tip1").css("color","green").text("该电话可记录！");
                     }
                 },
                 error:function (){
-                    $("#tip").css("color","black").text("貌似网络出了差错……");
+                    $("#tip1").css("color","black").text("貌似网络出了差错……");
+                }
+            })
+        }
+    });
+    $("#mailbox").blur(function checkMailbox(){
+        //console.log("失去了焦点");
+        var mailbox = $("#mailbox").val();
+        if(mailbox!=null && mailbox!==""){
+            $.ajax({
+                url:"/mailbox/"+mailbox,
+                method:"GET",
+                dataType:"JSON",
+                success:function (result,status,xhr){
+                    //console.log(result);
+                    if(result===true){
+                        $("#tip2").css("color","red").text("该邮箱已存在！");
+                    }
+                    else{
+                        $("#tip2").css("color","green").text("该邮箱可记录！");
+                    }
+                },
+                error:function (){
+                    $("#tip2").css("color","black").text("貌似网络出了差错……");
+                }
+            })
+        }
+    });
+    $("#username").blur(function checkName(){
+        //console.log("失去了焦点");
+        var username = $("#username").val();
+        if(username!=null && username!==""){
+            $.ajax({
+                url:"/username/"+username,
+                method:"GET",
+                dataType:"JSON",
+                success:function (result,status,xhr){
+                    //console.log(result);
+                    if(result===true){
+                        $("#tip3").css("color","red").text("该姓名已存在！");
+                    }
+                    else{
+                        $("#tip3").css("color","green").text("该姓名可记录！");
+                    }
+                },
+                error:function (){
+                    $("#tip3").css("color","black").text("貌似网络出了差错……");
                 }
             })
         }

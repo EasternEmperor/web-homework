@@ -9,4 +9,6 @@ public interface UserRepository extends CrudRepository<User, Integer> {
     @Override
     List<User> findAll();
     boolean existsByTelephone(String telephone);
+    boolean existsByEmail(String email);
+    boolean existsByName(String Username);
 }

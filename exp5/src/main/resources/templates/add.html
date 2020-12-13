@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+<!--    <title th:text="${title}"></title>-->
+    <link rel="stylesheet" href="./css/add.css">    <!--链接css文件-->
+    <script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js" type="text/javascript"></script>
+</head>
+
+<body>
+    <form onsubmit="return addList();" th:action="@{/add/post}" method="post" th:object="${user}">
+    <!-- 添加信息表格 -->
+    <table border="3" align="center" style="border-collapse: collapse;">
+        <caption style="font-size: 20px;"><b>添加联系人</b></caption>
+        <tr>
+            <th>姓名</th>
+            <td><input type="text" name="" class="form-control" id="username" th:field="*{name}"/></td>
+        </tr>
+        <tr>
+            <th>电话</th>
+            <td><input type="text" name="" class="form-control" id="telephone" th:field="*{telephone}"/></td>
+            <th><p id = "tip"></p></th>
+        </tr>
+        <tr>
+            <th>邮箱</th>
+            <td><input type="text" name="" class="form-control" id="mailbox" th:field="*{email}"/></td>
+        </tr>
+        <tr>
+            <th>住址</th>
+            <td><input type="text" name="" class="form-control" id="address" th:field="*{address}"/></td>
+        </tr>
+        <tr>
+            <th>QQ</th>
+            <td><input type="text" name="" class="form-control" id="QQnumber" th:field="*{qq}"/></td>
+        </tr>
+        <tr>
+            <td colspan="2" style="text-align: center;">
+                <!-- 重置、添加按钮 -->
+                <input type="reset" value="重置" class="button" id="reset" />
+                <input type="submit" value="添加"  class="button" id="add" />
+            </td>
+        </tr>
+    </table>
+</form>
+
+<script>
+    /*增加*/
+    function addList(){
+        var oUser = document.getElementById('username').value;
+        var oTel = document.getElementById('telephone').value;
+        var oMail = document.getElementById('mailbox').value;
+        var oAdd = document.getElementById('address').value;
+        var oQQ = document.getElementById('QQnumber').value;
+
+        //判断是否有非法输入
+        // 以下按步骤进行检测，防止一次性太多警告窗口
+        if (! checkName(oUser)) {
+            return false;
+        }
+        else if (! checkTel(oTel)) {
+            return false;
+        }
+        else if (! checkEmail(oMail)) {
+            return false;
+        }
+        else if (! checkAddress(oAdd)) {
+            return false;
+        }
+        else if (! checkQQ(oQQ)) {
+            return false;
+        }
+
+        // 全部正确则添加成功
+        alert("添加成功！");
+        return true
+    }
+    $("input[name='telephone']").blur(function checkTelephone(){
+        //console.log("失去了焦点");
+        var telephone = $("input[name='telephone']").val();
+        if(telephone!=null && telephone!==""){
+            $.ajax({
+                url:"/telephone/"+telephone,
+                method:"GET",
+                dataType:"JSON",
+                success:function (result,status,xhr){
+                    //console.log(result);
+                    if(result===true){
+                        $("#tip").css("color","red").text("该电话已存在！");
+                    }
+                    else{
+                        $("#tip").css("color","green").text("该电话可记录！");
+                    }
+                },
+                error:function (){
+                    $("#tip").css("color","black").text("貌似网络出了差错……");
+                }
+            })
+        }
+    })
+
+    //获取文本框,注册失去焦点的事件
+    function checkName(str) {
+        // 姓名不能为空
+        if (str.length == 0) {
+            alert("姓名不能为空！");
+            return false;
+        }
+        return true;
+    }
+    function checkTel(str) {
+        // 判断文本框输入的是否为电话号码
+        var telReg=/^[0-9]/;
+        if (str.length == 0) {
+            alert("电话不能为空！");
+            return false;
+        }
+        else if (str.length != 11 || telReg.test(str) == false) {
+            alert("请输入正确电话号码！");
+            return false;
+        }
+        return true;
+    }
+    function checkEmail(str) {
+        // 判断这个文本框中输入的是不是邮箱
+        var mailReg=/^[a-zA-Z0-9_-]+@([a-zA-Z0-9]+\.)+(com|cn|net|org)$/;
+        if (str.length == 0) {
+            alert("邮箱不能为空！");
+            return false;
+        }
+        else if(mailReg.test(str) == false) {
+            alert("邮箱格式错误！");
+            return false;
+        }
+        return true;
+    }
+    function checkAddress(str) {
+        // 判断地址是否空
+        if (str.length == 0) {
+            alert("地址不能为空！");
+            return false;
+        }
+        return true;
+    }
+    function checkQQ(str) {
+        // 判断文本框中输入的是否为正确的QQ号
+        var telReg=/^[0-9]/;
+        if (str.length == 0) {
+            alert("QQ号不能为空！");
+            return false;
+        }
+        if (telReg.test(str) == false) {
+            alert("请输入正确的QQ号！");
+            return false;
+        }
+        return true;
+    }
+</script>
+
+</body>
+</html>
